@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.project.manage.dao.UserInfoDao">
+
+    <resultMap type="com.company.project.manage.entity.UserInfo" id="UserInfoMap">
+        <result property="uid" column="uid" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="salt" column="salt" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findByUsername" resultType="com.company.project.manage.entity.UserInfo">
+        SELECT
+            user_info.uid,
+            user_info.`name`,
+            user_info.`password`,
+            user_info.salt,
+            user_info.state,
+            user_info.username
+        FROM
+            user_info
+        WHERE username=#{username}
+    </select>
+
+</mapper>
