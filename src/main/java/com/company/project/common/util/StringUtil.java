@@ -4,12 +4,9 @@ package com.company.project.common.util;
 import cn.hutool.core.util.StrUtil;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- *  字符串操作工具类，扩展自 hutool.cn
- * @author LErry.li
+ * 字符串操作工具类，扩展自 hutool.cn
+ * @author Ray。
  * Date: 2018-06-15
- * Time: 14:42
  */
 public class StringUtil extends StrUtil {
 

@@ -1,5 +1,8 @@
 package com.company.project.common.util;
 
+import lombok.extern.slf4j.Slf4j;
+
+import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
@@ -7,26 +10,16 @@ import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * Created with IntelliJ IDEA.
- * Description:
- *  IP操作工具类
- * @author LErry.li
+ * IP操作工具类
+ * @author Ray。
  * Date: 2018-06-16
- * Time: 16:59
  */
+@Slf4j
 public class IpUtil {
 
     private IpUtil() {
-
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(IpUtil.class);
 
     private static final String IP_PATTERN = "^(?:(?:[01]?\\d{1,2}|2[0-4]\\d|25[0-5])\\.){3}(?:[01]?\\d{1,2}|2[0-4]\\d|25[0-5])\\b";
 
@@ -83,7 +76,7 @@ public class IpUtil {
                     inet = InetAddress.getLocalHost();
                     ip = inet.getHostAddress();
                 } catch (UnknownHostException e) {
-                    logger.error("getRealIp occurs error, caused by: ", e);
+                    log.error("getRealIp occurs error, caused by: ", e);
                 }
             }
         }
@@ -137,7 +130,7 @@ public class IpUtil {
                 }
             }
         } catch (Exception e) {
-            logger.error("getServiceIp occurs error, caused by: ", e);
+            log.error("getServiceIp occurs error, caused by: ", e);
         }
 
         return ipsStr;

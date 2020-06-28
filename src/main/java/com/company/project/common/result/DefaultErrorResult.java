@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -24,7 +25,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class DefaultErrorResult implements Result {
+public class DefaultErrorResult implements Serializable {
     private static final long serialVersionUID = 1899083570489722793L;
 
     /**

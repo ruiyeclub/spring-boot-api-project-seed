@@ -1,9 +1,8 @@
 package com.company.project.configurer;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -17,19 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
  * 为了解决typeAliasesPackage 默认只能扫描某一个路径，不支持通配符和正则。
  * 所以重写SqlSessionFactoryBean的setTypeAliasesPackage方法
- *
- * @author LErry.li
+ * @author Ray。
  * Date: 2018/7/7
- * Time: 下午5:05
  */
+@Slf4j
 public class PackagesSqlSessionFactoryBean extends SqlSessionFactoryBean {
-
-    private final Logger logger = LoggerFactory.getLogger(PackagesSqlSessionFactoryBean.class);
-
 
     private static final String DEFAULT_RESOURCE_PATTERN = "**/*.class";
 
@@ -59,10 +52,10 @@ public class PackagesSqlSessionFactoryBean extends SqlSessionFactoryBean {
                 super.setTypeAliasesPackage(StringUtils.join(result.toArray(), ","));
             } else {
                 String msg = String.format("参数typeAliasesPackage:%s，未找到任何包", typeAliasesPackage);
-                logger.warn(msg);
+                log.warn(msg);
             }
         } catch (IOException | ClassNotFoundException e) {
-            logger.info(e.getMessage());
+            log.info(e.getMessage());
         }
     }
 

@@ -7,10 +7,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- *
- * @author LErry.li
+ * @author Ray。
  * Date: 2018-06-14
  * Time: 15:34
  */

@@ -1,15 +1,26 @@
 package com.company.project.manage.controller;
 
+import com.company.project.common.result.Result;
 import com.company.project.manage.service.UserInfoService;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
+
+import static com.company.project.common.result.Result.failure;
+import static com.company.project.common.result.Result.success;
 
 /**
  * (UserInfo)表控制层
@@ -81,4 +92,5 @@ public class UserInfoController {
     public String userDel(){
         return "userInfoDel";
     }
+
 }

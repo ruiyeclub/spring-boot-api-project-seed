@@ -35,7 +35,6 @@ public class ResponseResultInterceptor implements HandlerInterceptor {
                 request.setAttribute(RESPONSE_RESULT, method.getAnnotation(ResponseResult.class));
             }
         }
-
         return true;
     }
 

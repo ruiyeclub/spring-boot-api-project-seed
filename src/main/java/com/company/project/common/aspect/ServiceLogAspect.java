@@ -15,7 +15,6 @@ import java.lang.reflect.Method;
  * service 日志记录切面
  * @author Ray。
  * Date: 2018-06-17
- * Time: 14:47
  */
 @Aspect
 @Component

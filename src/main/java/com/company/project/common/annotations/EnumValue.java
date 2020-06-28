@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 /**
  * Created with IntelliJ IDEA.
  * Description:
- *  校验枚举值有效性
+ * 校验枚举值有效性
  * @author LErry.li
  * Date: 2018-06-15
  * Time: 14:41

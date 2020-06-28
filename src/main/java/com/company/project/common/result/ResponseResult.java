@@ -14,5 +14,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface ResponseResult {
-    Class<? extends Result>  value() default PlatformResult.class;
+    Class<? extends Result>  value() default Result.class;
 }

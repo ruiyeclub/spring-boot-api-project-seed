@@ -15,17 +15,13 @@ import java.util.Set;
 
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- *  类转化工具类
- * @author LErry.li
+ * 类转化工具类
+ * @author Ray。
  * Date: 2018-06-15
- * Time: 14:42
  */
 public class ConvertUtil {
 
     private ConvertUtil() {
-
     }
 
     public static List<ParameterInvalidItem> convertCVSetToParameterInvalidItemList(Set<ConstraintViolation<?>> cvset) {

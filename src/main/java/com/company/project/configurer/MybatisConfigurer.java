@@ -18,7 +18,7 @@ import static com.company.project.common.ProjectConstant.TYPE_ALIASES_PACKAGE;
 
 /**
  * Mybatis & Mapper & PageHelper 配置
- * @author lerry
+ * @author Ray。
  */
 @Configuration
 public class MybatisConfigurer {

@@ -11,17 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- *  AOP记录日志的一些共用方法
- * @author LErry.li
+ * AOP记录日志的一些共用方法
+ * @author Ray。
  * Date: 2018-06-17
- * Time: 15:19
  */
 public class LogAspectUtil {
 
     private LogAspectUtil(){
-
     }
 
     /**

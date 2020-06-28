@@ -6,12 +6,11 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.company.project.common.interceptor.AllowCrossDomainInterceptor;
 import com.company.project.common.interceptor.ResponseResultInterceptor;
-import com.company.project.common.result.PlatformResult;
+import com.company.project.common.result.Result;
 import com.company.project.common.util.IpUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -32,13 +31,11 @@ import java.util.List;
 
 /**
  * 全局定制化Spring Boot的MVC特性
- *
- * @author lerry
+ * @author Ray。
  */
 @Configuration
+@Slf4j
 public class MvcConfigurer implements WebMvcConfigurer {
-
-    private final Logger logger = LoggerFactory.getLogger(MvcConfigurer.class);
 
     /**
      * 当前激活的配置文件
@@ -84,7 +81,7 @@ public class MvcConfigurer implements WebMvcConfigurer {
         interceptorRegistry.addInterceptor(allowCrossDomainInterceptor).addPathPatterns(apiUri);
         //响应结果控制拦截
         interceptorRegistry.addInterceptor(responseResultInterceptor).addPathPatterns(apiUri);
-        //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
+        //TODO 接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
         //开发环境忽略签名认证
         if (!"dev".equals(env)) {
             interceptorRegistry.addInterceptor(new HandlerInterceptorAdapter() {
@@ -95,9 +92,9 @@ public class MvcConfigurer implements WebMvcConfigurer {
                     if (pass) {
                         return true;
                     } else {
-                        logger.warn("签名认证失败，请求接口：{}，请求IP：{}，请求参数：{}",
+                        log.warn("签名认证失败，请求接口：{}，请求IP：{}，请求参数：{}",
                                 request.getRequestURI(), IpUtil.getRealIp(request), JSON.toJSONString(request.getParameterMap()));
-                        PlatformResult result = new PlatformResult();
+                        Result result = new Result();
                         result.setCode(HttpStatus.UNAUTHORIZED.value()).setMessage("签名认证失败");
                         responseResult(response, result);
                         return false;
@@ -114,14 +111,14 @@ public class MvcConfigurer implements WebMvcConfigurer {
                 .setCachePeriod(0);
     }
 
-    private void responseResult(HttpServletResponse response, PlatformResult result) {
+    private void responseResult(HttpServletResponse response, Result result) {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Content-type", "application/json;charset=UTF-8");
         response.setStatus(200);
         try {
             response.getWriter().write(JSON.toJSONString(result));
         } catch (IOException ex) {
-            logger.error(ex.getMessage());
+            log.error(ex.getMessage());
         }
     }
 

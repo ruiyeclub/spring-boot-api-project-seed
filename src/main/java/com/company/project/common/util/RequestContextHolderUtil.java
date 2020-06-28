@@ -10,12 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- *  应用级对象获取工具类
- * @author LErry.li
+ * 应用级对象获取工具类
+ * @author Ray。
  * Date: 2018-06-15
- * Time: 14:42
  */
 public class RequestContextHolderUtil {
 

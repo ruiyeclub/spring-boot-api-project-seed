@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
  * 统一返回状态码
- * @author LErry.li
+ * @author Ray。
  * Date: 2018-06-15
- * Time: 14:42
  */
 public enum ResultCode {
 

@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * Created with IntelliJ IDEA.
  * Description:
- *  AOP日志记录，自定义注解
+ * AOP日志记录，自定义注解
  * @author LErry.li
  * Date: 2018-06-17
  * Time: 14:45

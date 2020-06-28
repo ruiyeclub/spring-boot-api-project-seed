@@ -13,12 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- *  允许跨域拦截器
- * @author LErry.li
+ * 允许跨域拦截器
+ * @author Ray。
  * Date: 2018-06-16
- * Time: 14:36
  */
 @Component
 public class AllowCrossDomainInterceptor implements HandlerInterceptor {
