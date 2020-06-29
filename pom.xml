@@ -144,7 +144,7 @@
         <!--Shiro-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-all</artifactId>
+            <artifactId>shiro-spring</artifactId>
             <version>1.4.1</version>
         </dependency>
 
@@ -153,7 +153,19 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-        <!--TODO jwt redis mybatis-plus-->
+        <!--Redis缓存操作 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!--lettuce pool缓存连接池 不加启动不了-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+
+        <!--TODO jwt mybatis-plus-->
     </dependencies>
 
     <build>

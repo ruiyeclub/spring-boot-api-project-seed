@@ -6,12 +6,9 @@ import org.springframework.util.StringUtils;
 
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- *  业务异常类
- * @author LErry.li
+ * 业务异常类
+ * @author Ray。
  * Date: 2018-06-15
- * Time: 14:41
  */
 @Data
 public class BusinessException extends RuntimeException {

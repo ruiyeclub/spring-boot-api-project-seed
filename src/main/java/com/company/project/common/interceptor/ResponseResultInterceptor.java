@@ -11,12 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- *  接口响应体控制拦截器（主要用于将ResponseResult注解类的标记信息传入ResponseResultHandler中）
- * @author LErry.li
+ * 接口响应体控制拦截器（主要用于将ResponseResult注解类的标记信息传入ResponseResultHandler中）
+ * @author Ray。
  * Date: 2018-06-15
- * Time: 14:41
  */
 @Component
 public class ResponseResultInterceptor implements HandlerInterceptor {
