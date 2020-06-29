@@ -16,4 +16,6 @@ public interface UserInfoService extends Service<UserInfo> {
      * 通过username查找用户信息
      */
     UserInfo findByUsername(@Param("username") String username);
+
+    boolean login(String username, String password);
 }

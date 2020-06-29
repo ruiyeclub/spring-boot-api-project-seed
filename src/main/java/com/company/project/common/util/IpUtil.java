@@ -36,15 +36,15 @@ public class IpUtil {
         String ip = LOCAL_IP;
         if (request != null) {
             ip = request.getHeader("x-forwarded-for");
-            if (StringUtil.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            if (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
                 ip = request.getHeader("Proxy-Client-IP");
             }
 
-            if (StringUtil.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            if (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
                 ip = request.getHeader("WL-Proxy-Client-IP");
             }
 
-            if (StringUtil.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            if (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
                 ip = request.getRemoteAddr();
             }
         }

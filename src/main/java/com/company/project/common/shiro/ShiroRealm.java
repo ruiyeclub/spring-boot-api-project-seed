@@ -1,5 +1,6 @@
 package com.company.project.common.shiro;
 
+import cn.hutool.Hutool;
 import com.company.project.manage.entity.UserInfo;
 import com.company.project.manage.service.SysPermissionService;
 import com.company.project.manage.service.SysRoleService;
@@ -68,14 +69,13 @@ public class ShiroRealm extends AuthorizingRealm {
             ////没有返回登录用户名对应的SimpleAuthenticationInfo对象时,就会在LoginController中抛出UnknownAccountException异常
             return null;
         }
+
         //登录成功 返回一个身份信息
         return new SimpleAuthenticationInfo(
                 //用户名
                 userInfo,
                 //密码
                 userInfo.getPassword(),
-                //salt=username+salt
-                ByteSource.Util.bytes(userInfo.getCredentialsSalt()),
                 //realm name
                 getName()
         );

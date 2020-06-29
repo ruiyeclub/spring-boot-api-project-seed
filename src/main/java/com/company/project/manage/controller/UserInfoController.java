@@ -1,5 +1,7 @@
 package com.company.project.manage.controller;
 
+import com.company.project.common.result.Result;
+import com.company.project.common.result.ResultCode;
 import com.company.project.common.util.RedisUtils;
 import com.company.project.manage.service.UserInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,44 +29,19 @@ public class UserInfoController {
      */
     @Resource
     private UserInfoService userInfoService;
-    @Autowired
-    private RedisUtils redisUtils;
-
-    @RequestMapping({"/","/index"})
-    public String index(){
-        return"/index";
-    }
 
     /**
      * 没看懂 这里不是验证登录 只做了跳转
-     * @param request
-     * @param map
      * @return
      */
     @RequestMapping("/login")
-    public String login(HttpServletRequest request, Map<String, Object> map) {
-        // 登录失败从request中获取shiro处理的异常信息。
-        // shiroLoginFailure:就是shiro异常类的全类名.
-        Object exception = request.getAttribute("shiroLoginFailure");
-        String msg = "";
-        if (exception != null) {
-            if (exception instanceof UnknownAccountException) {
-                msg = "账户不存在或密码不正确";
-            } else if (exception instanceof IncorrectCredentialsException) {
-                msg = "账户不存在或密码不正确";
-            } else {
-                msg = "其他异常";
-            }
+    public Result login(String username, String password) {
+        //FIXME
+        boolean login = userInfoService.login(username, password);
+        if(!login){
+            return Result.failure(ResultCode.USER_LOGIN_ERROR);
         }
-        map.put("msg", msg);
-        // 此方法不处理登录成功,由shiro进行处理.
-        log.info("来了");
-        return "login";
-    }
-
-    @RequestMapping("/403")
-    public String unauthorizedRole(){
-        return "403";
+        return Result.success();
     }
 
     /**
@@ -72,8 +49,8 @@ public class UserInfoController {
      */
     @RequestMapping("/list")
     @RequiresPermissions("userInfo:view")
-    public String userInfo(){
-        return "userInfo";
+    public Result userInfo(){
+        return Result.success();
     }
 
     /**
@@ -81,9 +58,8 @@ public class UserInfoController {
      */
     @RequestMapping("/add")
     @RequiresPermissions("userInfo:add")
-    public String userInfoAdd(){
-        redisUtils.set("first","1slkfjlafkldsaaf急急急");
-        return "userInfoAdd";
+    public Result userInfoAdd(){
+        return Result.success();
     }
 
     /**
@@ -92,8 +68,8 @@ public class UserInfoController {
      */
     @RequestMapping("/del")
     @RequiresPermissions("userInfo:del")
-    public String userDel(){
-        return "userInfoDel";
+    public Result userDel(){
+        return Result.success();
     }
 
 }

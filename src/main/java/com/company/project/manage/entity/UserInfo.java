@@ -27,13 +27,4 @@ public class UserInfo implements Serializable {
     private String state;
     
     private String username;
-
-    /**
-     * 密码盐.
-     * @return
-     */
-    public String getCredentialsSalt(){
-        return this.username+this.salt;
-    }
-
 }

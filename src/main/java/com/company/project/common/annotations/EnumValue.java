@@ -3,7 +3,7 @@ package com.company.project.common.annotations;
 
 
 import com.company.project.common.exception.BusinessException;
-import com.company.project.common.util.StringUtil;
+import com.company.project.common.util.StringUtils;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
@@ -66,7 +66,7 @@ public @interface EnumValue {
             try {
                 Method method = enumClass.getMethod(enumMethod, valueClass);
                 if (!Boolean.TYPE.equals(method.getReturnType()) && !Boolean.class.equals(method.getReturnType())) {
-                    throw new BusinessException(StringUtil.formatIfArgs("%s method return is not boolean type in the %s class", enumMethod, enumClass));
+                    throw new BusinessException(StringUtils.formatIfArgs("%s method return is not boolean type in the %s class", enumMethod, enumClass));
                 }
 
                 Boolean result = (Boolean)method.invoke(null, value);
@@ -74,7 +74,7 @@ public @interface EnumValue {
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                 throw new BusinessException(e.getMessage());
             } catch (NoSuchMethodException | SecurityException e) {
-                throw new BusinessException(StringUtil.formatIfArgs("This %s(%s) method does not exist in the %s", enumMethod, valueClass, enumClass), e);
+                throw new BusinessException(StringUtils.formatIfArgs("This %s(%s) method does not exist in the %s", enumMethod, valueClass, enumClass), e);
             }
         }
 
