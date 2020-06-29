@@ -62,18 +62,22 @@ public class ShiroConfig {
     public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //将Realm注入到SecurityManager中。
-        securityManager.setRealm(myShiroRealm());
+        securityManager.setRealm(shiroRealm());
         //注入rememberMeManager;
         securityManager.setRememberMeManager(cookieRememberMeManager());
         return securityManager;
     }
 
+    /**
+     * 自定义身份认证 realm
+     * @return
+     */
     @Bean
-    public MyShiroRealm myShiroRealm() {
-        MyShiroRealm myShiroRealm = new MyShiroRealm();
+    public ShiroRealm shiroRealm() {
+        ShiroRealm shiroRealm = new ShiroRealm();
         //设置解密规则
-        myShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
-        return myShiroRealm;
+        shiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+        return shiroRealm;
     }
 
     /**

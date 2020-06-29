@@ -2,6 +2,7 @@ package com.company.project.manage.controller;
 
 import com.company.project.common.result.Result;
 import com.company.project.manage.service.UserInfoService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -28,6 +29,7 @@ import static com.company.project.common.result.Result.success;
  * @since 2020-06-28 15:18:39
  */
 @Controller
+@Slf4j
 public class UserInfoController {
     /**
      * 服务对象
@@ -40,6 +42,12 @@ public class UserInfoController {
         return"/index";
     }
 
+    /**
+     * 没看懂 这里不是验证登录 只做了跳转
+     * @param request
+     * @param map
+     * @return
+     */
     @RequestMapping("/login")
     public String login(HttpServletRequest request, Map<String, Object> map) {
         // 登录失败从request中获取shiro处理的异常信息。
@@ -57,6 +65,7 @@ public class UserInfoController {
         }
         map.put("msg", msg);
         // 此方法不处理登录成功,由shiro进行处理.
+        log.info("来了");
         return "login";
     }
 

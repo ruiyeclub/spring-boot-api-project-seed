@@ -141,7 +141,7 @@
             <artifactId>javax.el</artifactId>
             <version>3.0.0</version>
         </dependency>
-        <!--shiro-->
+        <!--Shiro-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-all</artifactId>

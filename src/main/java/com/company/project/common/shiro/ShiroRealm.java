@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date 2017-12-01 21:25
  */
 @Slf4j
-public class MyShiroRealm extends AuthorizingRealm {
+public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     private UserInfoService userInfoService;
     @Autowired
@@ -33,7 +33,7 @@ public class MyShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
-        System.out.println("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
+        log.info("权限配置-->ShiroRealm.doGetAuthorizationInfo()");
         //shiro的对象 存储登录用户的信息
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         UserInfo userInfo  = (UserInfo)principal.getPrimaryPrincipal();
@@ -63,7 +63,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         //通过username从数据库中查找 User对象，如果找到，没找到.
         //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
         UserInfo userInfo = userInfoService.findByUsername(username);
-        System.out.println("----->>userInfo=" + userInfo);
+        log.info("----->>userInfo={}",userInfo);
         if (userInfo == null) {
             ////没有返回登录用户名对应的SimpleAuthenticationInfo对象时,就会在LoginController中抛出UnknownAccountException异常
             return null;
