@@ -16,7 +16,7 @@ public class UserInfo implements Serializable {
     private static final long serialVersionUID = -13536847767183431L;
 
     @Id
-    private Integer uid;
+    private Integer id;
     
     private String name;
     
