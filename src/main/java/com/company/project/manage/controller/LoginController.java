@@ -2,6 +2,8 @@ package com.company.project.manage.controller;
 
 import com.company.project.common.result.Result;
 import com.company.project.common.util.MD5Utils;
+import com.company.project.common.util.StringUtils;
+import com.company.project.manage.dto.param.LoginParam;
 import com.company.project.manage.entity.UserInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,10 +13,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Slf4j
@@ -29,10 +28,11 @@ public class LoginController {
 	@PostMapping("/login")
 	@ResponseBody
 	@ApiOperation("登录")
-	public Result login(String username, String password, Boolean rememberMe) {
+	public Result login(String username,String password,boolean rememberMe) {
 		System.out.println("我是controller");
 		password = MD5Utils.encrypt(username, password);
-		UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
+		UsernamePasswordToken token = new UsernamePasswordToken(username, password,
+				rememberMe);
 		Subject subject = SecurityUtils.getSubject();
 		System.out.println("我是controller1");
 		try {
@@ -54,7 +54,7 @@ public class LoginController {
 	public String redirectIndex() {
 		return "redirect:/index";
 	}
-	
+
 	@GetMapping("/403")
 	public String forbid() {
 		return "403";
@@ -62,6 +62,7 @@ public class LoginController {
 
 	@RequestMapping("/index")
 	public String index(Model model) {
+		System.out.println("进入首页index");
 		UserInfo user = (UserInfo) SecurityUtils.getSubject().getPrincipal();
 		model.addAttribute("user", user);
 		return "index";

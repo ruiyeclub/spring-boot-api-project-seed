@@ -35,7 +35,7 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
-        log.info("权限配置-->ShiroRealm.doGetAuthorizationInfo()");
+        log.info("授权-->ShiroRealm.doGetAuthorizationInfo()");
         //shiro的对象 存储登录用户的信息
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         UserInfo userInfo  = (UserInfo)principal.getPrimaryPrincipal();
@@ -62,11 +62,12 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
+        System.out.println("认证-->ShiroRealm.doGetAuthenticationInfo");
         //获取用户的输入的账号
         String username = (String) token.getPrincipal();
+        //TODO NPE
         String password = new String((char[]) token.getCredentials());
-        //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
-        System.out.println("用户" + username + "认证-----ShiroRealm.doGetAuthenticationInfo");
         UserInfo userInfo = userInfoService.findByUsername(username);
         if (userInfo == null) {
             throw new UnknownAccountException("用户名或密码错误！");
