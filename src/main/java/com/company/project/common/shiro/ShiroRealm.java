@@ -1,6 +1,6 @@
 package com.company.project.common.shiro;
 
-import cn.hutool.Hutool;
+import com.company.project.manage.entity.SysRole;
 import com.company.project.manage.entity.UserInfo;
 import com.company.project.manage.service.SysPermissionService;
 import com.company.project.manage.service.SysRoleService;
@@ -11,8 +11,9 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 /**
  * @author Ray。
@@ -38,6 +39,8 @@ public class ShiroRealm extends AuthorizingRealm {
         //shiro的对象 存储登录用户的信息
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         UserInfo userInfo  = (UserInfo)principal.getPrimaryPrincipal();
+        List<SysRole> roleByUsername = sysRoleService.findRoleByUsername(userInfo.getUsername());
+        System.out.println("hhh"+roleByUsername.toString());
         sysRoleService.findRoleByUsername(userInfo.getUsername()).stream().forEach(
                 sysRole -> {
                     authorizationInfo.addRole(sysRole.getRole());
@@ -61,24 +64,20 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         //获取用户的输入的账号
         String username = (String) token.getPrincipal();
-        //通过username从数据库中查找 User对象，如果找到，没找到.
+        String password = new String((char[]) token.getCredentials());
         //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
+        System.out.println("用户" + username + "认证-----ShiroRealm.doGetAuthenticationInfo");
         UserInfo userInfo = userInfoService.findByUsername(username);
-        log.info("----->>userInfo={}",userInfo);
         if (userInfo == null) {
-            ////没有返回登录用户名对应的SimpleAuthenticationInfo对象时,就会在LoginController中抛出UnknownAccountException异常
-            return null;
+            throw new UnknownAccountException("用户名或密码错误！");
         }
-
-        //登录成功 返回一个身份信息
-        return new SimpleAuthenticationInfo(
-                //用户名
-                userInfo,
-                //密码
-                userInfo.getPassword(),
-                //realm name
-                getName()
-        );
+        if (!password.equals(userInfo.getPassword())) {
+            throw new IncorrectCredentialsException("用户名或密码错误！");
+        }
+        if (userInfo.getState().equals("0")) {
+            throw new LockedAccountException("账号已被锁定,请联系管理员！");
+        }
+        return new SimpleAuthenticationInfo(userInfo,password,getName());
     }
 
 }

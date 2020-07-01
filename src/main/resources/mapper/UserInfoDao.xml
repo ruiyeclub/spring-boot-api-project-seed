@@ -3,7 +3,7 @@
 <mapper namespace="com.company.project.manage.dao.UserInfoDao">
 
     <resultMap type="com.company.project.manage.entity.UserInfo" id="UserInfoMap">
-        <result property="uid" column="uid" jdbcType="INTEGER"/>
+        <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
         <result property="salt" column="salt" jdbcType="VARCHAR"/>
@@ -13,7 +13,7 @@
 
     <select id="findByUsername" resultType="com.company.project.manage.entity.UserInfo">
         SELECT
-            user_info.uid,
+            user_info.id,
             user_info.`name`,
             user_info.`password`,
             user_info.salt,

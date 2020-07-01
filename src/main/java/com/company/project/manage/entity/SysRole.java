@@ -18,8 +18,6 @@ public class SysRole implements Serializable {
     @Id
     private Integer id;
     
-    private String available;
-    
     private String description;
     
     private String role;

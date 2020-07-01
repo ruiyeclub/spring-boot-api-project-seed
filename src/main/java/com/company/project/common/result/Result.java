@@ -10,12 +10,9 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- * 平台通用返回结果
- * @author LErry.li
+ * 通用返回结果格式
+ * @author Ray。
  * Date: 2018-06-15
- * Time: 14:41
  */
 @Builder
 @NoArgsConstructor

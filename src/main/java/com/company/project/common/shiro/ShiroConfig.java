@@ -1,12 +1,13 @@
 package com.company.project.common.shiro;
 
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
@@ -26,6 +27,10 @@ public class ShiroConfig {
 
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
+        //设置登录页、首页和无权限页
+        shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setSuccessUrl("/index");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 
         /**
          * anon：无需认证就可以访问
@@ -36,9 +41,13 @@ public class ShiroConfig {
          */
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/logout", "logout");
-        filterChainDefinitionMap.put("/index", "user");
-        filterChainDefinitionMap.put("/", "user");
-        filterChainDefinitionMap.put("/favicon.ico", "anon");
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/js/**", "anon");
+        filterChainDefinitionMap.put("/fonts/**", "anon");
+        filterChainDefinitionMap.put("/img/**", "anon");
+        filterChainDefinitionMap.put("/druid/**", "anon");
+        filterChainDefinitionMap.put("/logout", "logout");
+        filterChainDefinitionMap.put("/", "anon");
         //swagger2免拦截
         filterChainDefinitionMap.put("/swagger-ui.html**", "anon");
         filterChainDefinitionMap.put("/v2/api-docs", "anon");
@@ -46,9 +55,6 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/webjars/**", "anon");
         //这个表示必须认证了才能访问 得放在最后面
         filterChainDefinitionMap.put("/**", "authc");
-        //authc表示需要验证身份才能访问，还有一些比如anon表示不需要验证身份就能访问等。
-        shiroFilterFactoryBean.setLoginUrl("/login");
-        shiroFilterFactoryBean.setSuccessUrl("/index");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
@@ -65,6 +71,8 @@ public class ShiroConfig {
         securityManager.setRealm(shiroRealm());
         //注入rememberMeManager;
         securityManager.setRememberMeManager(cookieRememberMeManager());
+        //集成redis
+        securityManager.setCacheManager(cacheManager());
         return securityManager;
     }
 
@@ -75,23 +83,9 @@ public class ShiroConfig {
     @Bean
     public ShiroRealm shiroRealm() {
         ShiroRealm shiroRealm = new ShiroRealm();
-        //设置解密规则
-        shiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return shiroRealm;
     }
 
-    /**
-     * 因为我们的密码是加过密的，所以，如果要Shiro验证用户身份的话，需要告诉它我们用的是md5加密的，并且是加密了两次。同时我们在自己的Realm中也通过SimpleAuthenticationInfo返回了加密时使用的盐。这样Shiro就能顺利的解密密码并验证用户名和密码是否正确了。
-     */
-    @Bean
-    public HashedCredentialsMatcher hashedCredentialsMatcher() {
-        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
-        //散列算法:这里使用MD5算法;
-        hashedCredentialsMatcher.setHashAlgorithmName("md5");
-        //散列的次数，比如散列两次，相当于 md5(md5(""));
-        hashedCredentialsMatcher.setHashIterations(2);
-        return hashedCredentialsMatcher;
-    }
     /**
      *  开启shiro aop注解支持.
      *  使用代理方式;所以需要开启代码支持;
@@ -134,5 +128,21 @@ public class ShiroConfig {
         CookieRememberMeManager manager = new CookieRememberMeManager();
         manager.setCookie(rememberMeCookie());
         return manager;
+    }
+
+    /**
+     * shiro集成redis
+     * @return
+     */
+    public RedisManager redisManager() {
+        RedisManager redisManager = new RedisManager();
+        return redisManager;
+    }
+
+    public RedisCacheManager cacheManager() {
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        //这里使用了上面这个方法
+        redisCacheManager.setRedisManager(redisManager());
+        return redisCacheManager;
     }
 }

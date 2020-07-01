@@ -1,16 +1,40 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+	<meta charset="UTF-8">
+	<title>登录</title>
+	<link rel="stylesheet" th:href="@{/css/login.css}" type="text/css">
+	<script th:src="@{/js/jquery-1.11.1.min.js}"></script>
 </head>
 <body>
-错误信息：<h4 th:text="${msg}"></h4>
-<form action="" method="post">
-    <p>账号：<input type="text" name="username" value="admin"/></p>
-    <p>密码：<input type="text" name="password" value="123456"/></p>
-    <p><input type="submit" value="登录"/></p>
-    <P><input type="checkbox" name="rememberMe" />记住我</P>
-</form>
+	<div class="login-page">
+	  <div class="form">
+	      <input type="text" placeholder="用户名" name="username" required="required"/>
+	      <input type="password" placeholder="密码" name="password" required="required"/>
+	      <p><input type="checkbox" name="rememberMe" />记住我</p>
+	      <button onclick="login()">登录</button>
+	  </div>
+	</div>
 </body>
+<script th:inline="javascript"> 
+	var ctx = [[@{/}]];
+    function login() {
+		var username = $("input[name='username']").val();
+		var password = $("input[name='password']").val();
+		var rememberMe = $("input[name='rememberMe']").is(':checked');
+		$.ajax({
+			type: "post",
+			url: ctx + "login",
+			data: {"username": username, "password": password, "rememberMe": rememberMe},
+			dataType: "json",
+			success: function (r) {
+				if (r.code == 0) {
+					location.href = ctx + 'index';
+				} else {
+					alert(r.msg);
+				}
+			}
+		});
+	}
+</script>
 </html>

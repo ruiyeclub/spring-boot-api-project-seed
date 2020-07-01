@@ -1,7 +1,6 @@
 package com.company.project.manage.service.impl;
 
 import com.company.project.common.service.AbstractService;
-import com.company.project.common.util.MD5;
 import com.company.project.common.util.StringUtils;
 import com.company.project.manage.dao.UserInfoDao;
 import com.company.project.manage.entity.UserInfo;
@@ -30,8 +29,7 @@ public class UserInfoServiceImpl extends AbstractService<UserInfo> implements Us
     public boolean login(String username, String password) {
         UserInfo userInfo=new UserInfo();
         userInfo.setName(username);
-        String md5String = MD5.getMD5String(password);
-        userInfo.setPassword(md5String);
+//        userInfo.setPassword(md5String);
         UserInfo user = userInfoDao.selectOne(userInfo);
         if(StringUtils.isNull(user)){
             return false;
