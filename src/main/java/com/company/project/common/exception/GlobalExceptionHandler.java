@@ -6,10 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
@@ -22,8 +19,7 @@ import javax.validation.ConstraintViolationException;
  * Date: 2018-06-15
  * Time: 14:41
  */
-@RestController
-@ControllerAdvice
+//@RestControllerAdvice
 public class GlobalExceptionHandler extends BaseGlobalExceptionHandler {
 
     /**

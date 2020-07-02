@@ -11,9 +11,7 @@
 
     <select id="findPermissionByRoleId" resultType="com.company.project.manage.entity.SysPermission">
         SELECT
-            sys_role.id,
-            sys_role.description,
-            sys_role.role,
+            sys_permission.id,
             sys_permission.`name`,
             sys_permission.permission,
             sys_permission.url

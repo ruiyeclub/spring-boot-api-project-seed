@@ -1,10 +1,9 @@
 package com.company.project.configurer;
- 
+
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
- 
+
 /**
  * 资源拦截器
  * @author Ray。
@@ -22,5 +21,5 @@ public class WebMvcConfigurer extends WebMvcConfigurationSupport {
                 .addResourceLocations("classpath:/templates/");
         super.addResourceHandlers(registry);
 	}
-	
+
 }

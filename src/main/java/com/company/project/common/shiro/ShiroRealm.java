@@ -1,6 +1,5 @@
 package com.company.project.common.shiro;
 
-import com.company.project.manage.entity.SysRole;
 import com.company.project.manage.entity.UserInfo;
 import com.company.project.manage.service.SysPermissionService;
 import com.company.project.manage.service.SysRoleService;
@@ -12,8 +11,6 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 /**
  * @author Ray。
@@ -39,13 +36,14 @@ public class ShiroRealm extends AuthorizingRealm {
         //shiro的对象 存储登录用户的信息
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         UserInfo userInfo  = (UserInfo)principal.getPrimaryPrincipal();
-        List<SysRole> roleByUsername = sysRoleService.findRoleByUsername(userInfo.getUsername());
-        System.out.println("hhh"+roleByUsername.toString());
+        // 获取用户角色集
         sysRoleService.findRoleByUsername(userInfo.getUsername()).stream().forEach(
                 sysRole -> {
+                    log.info("拥有的角色：{}，{}",sysRole.getRole(),sysRole.getId());
                     authorizationInfo.addRole(sysRole.getRole());
                     sysPermissionService.findPermissionByRoleId(sysRole.getId()).stream().forEach(
                             sysPermission -> {
+                                log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~拥有的权限：{}",sysPermission.getPermission());
                                 authorizationInfo.addStringPermission(sysPermission.getPermission());
                             }
                     );

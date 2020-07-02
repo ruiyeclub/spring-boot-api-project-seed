@@ -10,12 +10,6 @@
 
     <select id="findRoleByUsername" resultType="com.company.project.manage.entity.SysRole">
         SELECT
-            user_info.id,
-            user_info.`name`,
-            user_info.`password`,
-            user_info.salt,
-            user_info.state,
-            user_info.username,
             sys_role.id,
             sys_role.description,
             sys_role.role

@@ -18,4 +18,11 @@ public interface SysPermissionDao extends CrudMapper<SysPermission> {
      * 根据角色ID查询角色对应的权限信息
      */
     List<SysPermission> findPermissionByRoleId(@Param("roleId") Integer roleId);
+
+    /**
+     * 通过用户名查询用户权限
+     * @param userName
+     * @return
+     */
+//    List<SysPermission> findByUserName(String userName);
 }
