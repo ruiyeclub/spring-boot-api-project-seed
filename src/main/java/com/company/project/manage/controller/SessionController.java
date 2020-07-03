@@ -1,6 +1,5 @@
 package com.company.project.manage.controller;
 
-import com.company.project.common.result.ResponseBo;
 import com.company.project.common.result.Result;
 import com.company.project.manage.entity.UserOnline;
 import com.company.project.manage.service.SessionService;

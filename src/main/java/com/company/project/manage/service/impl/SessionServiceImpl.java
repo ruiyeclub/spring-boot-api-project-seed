@@ -7,6 +7,7 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
+import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

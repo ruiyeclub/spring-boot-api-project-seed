@@ -147,7 +147,7 @@ public class ShiroConfig {
      * @return
      */
     @Bean
-    public RedisSessionDAO sessionDAO() {
+    public RedisSessionDAO redisSessionDAO() {
         RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
         redisSessionDAO.setRedisManager(redisManager());
         return redisSessionDAO;
@@ -159,7 +159,7 @@ public class ShiroConfig {
         Collection<SessionListener> listeners = new ArrayList<SessionListener>();
         listeners.add(new ShiroSessionListener());
         sessionManager.setSessionListeners(listeners);
-        sessionManager.setSessionDAO(sessionDAO());
+        sessionManager.setSessionDAO(redisSessionDAO());
         return sessionManager;
     }
 
