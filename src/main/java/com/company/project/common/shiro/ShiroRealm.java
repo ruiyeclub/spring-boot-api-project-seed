@@ -39,11 +39,9 @@ public class ShiroRealm extends AuthorizingRealm {
         // 获取用户角色集
         sysRoleService.findRoleByUsername(userInfo.getUsername()).stream().forEach(
                 sysRole -> {
-                    log.info("拥有的角色：{}，{}",sysRole.getRole(),sysRole.getId());
                     authorizationInfo.addRole(sysRole.getRole());
                     sysPermissionService.findPermissionByRoleId(sysRole.getId()).stream().forEach(
                             sysPermission -> {
-                                log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~拥有的权限：{}",sysPermission.getPermission());
                                 authorizationInfo.addStringPermission(sysPermission.getPermission());
                             }
                     );
@@ -64,7 +62,6 @@ public class ShiroRealm extends AuthorizingRealm {
         System.out.println("认证-->ShiroRealm.doGetAuthenticationInfo");
         //获取用户的输入的账号
         String username = (String) token.getPrincipal();
-        //TODO NPE
         String password = new String((char[]) token.getCredentials());
         UserInfo userInfo = userInfoService.findByUsername(username);
         if (userInfo == null) {
