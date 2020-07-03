@@ -19,7 +19,7 @@ import javax.validation.ConstraintViolationException;
  * Date: 2018-06-15
  * Time: 14:41
  */
-//@RestControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler extends BaseGlobalExceptionHandler {
 
     /**

@@ -77,7 +77,6 @@
 	},"json");
 	
 	function offline(id,status){
-		alert(1)
 		if(status == "离线"){
 			alert("该用户已是离线状态！！");
 			return;
@@ -88,7 +87,6 @@
 			data: {"id": id},
 			dataType: "json",
 			success: function (r) {
-				console.log(r)
 				if (r.code == 0) {
 					alert('该用户已强制下线！');
 					location.href = ctx + 'online/index';
@@ -97,6 +95,7 @@
 				}
 			},
 			error: function(e) {
+				alert("还是出错了")
 				console.log("error{}",e)
 			}
 		});

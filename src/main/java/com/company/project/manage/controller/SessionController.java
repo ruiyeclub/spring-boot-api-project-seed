@@ -1,6 +1,6 @@
 package com.company.project.manage.controller;
 
-import com.company.project.common.result.Result;
+import com.company.project.common.result.ResponseBo;
 import com.company.project.manage.entity.UserOnline;
 import com.company.project.manage.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/online")
@@ -30,15 +31,16 @@ public class SessionController {
 
     @ResponseBody
     @RequestMapping("forceLogout")
-    public Result forceLogout(String id) {
+    public void  forceLogout(String id) {
         try {
+            System.out.println("id~~~~~~~~~~~~~"+id);
             sessionService.forceLogout(id);
-            Result success = Result.success();
-            System.out.println(success);
-            return success;
+            ResponseBo ok = ResponseBo.ok();
+            System.out.println(ok);
+//            return ok;
         } catch (Exception e) {
             e.printStackTrace();
-            return Result.failure("踢出用户失败");
+//            return ResponseBo.error("踢出用户失败");
         }
 
     }

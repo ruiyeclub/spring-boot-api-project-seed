@@ -31,12 +31,7 @@ public class MyAuthorizationException {
      */
     @ExceptionHandler(value = ExpiredSessionException.class )
     public String handleExpiredSessionException() {
-        System.out.println("????????????????????????????");
+        System.out.println("强制下线");
         return "login";
-    }
-
-    @ExceptionHandler(value = Exception.class)
-    public void exception(){
-        System.out.println("来了");
     }
 }
