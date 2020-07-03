@@ -1,6 +1,7 @@
 package com.company.project.manage.controller;
 
 import com.company.project.common.result.ResponseBo;
+import com.company.project.common.result.Result;
 import com.company.project.manage.entity.UserOnline;
 import com.company.project.manage.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +32,13 @@ public class SessionController {
 
     @ResponseBody
     @RequestMapping("forceLogout")
-    public void  forceLogout(String id) {
+    public Result forceLogout(String id) {
         try {
-            System.out.println("id~~~~~~~~~~~~~"+id);
             sessionService.forceLogout(id);
-            ResponseBo ok = ResponseBo.ok();
-            System.out.println(ok);
-//            return ok;
+            return Result.success();
         } catch (Exception e) {
             e.printStackTrace();
-//            return ResponseBo.error("踢出用户失败");
+            return Result.failure("踢出用户失败");
         }
 
     }

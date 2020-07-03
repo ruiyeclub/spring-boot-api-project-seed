@@ -56,7 +56,7 @@ public class SessionServiceImpl implements SessionService {
 	@Override
 	public boolean forceLogout(String sessionId) {
 		Session session = sessionDAO.readSession(sessionId);
-		session.setTimeout(0);
+		sessionDAO.delete(session);
 		return true;
 	}
 
