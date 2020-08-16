@@ -1,6 +1,5 @@
 package com.company.project.manage.service.impl;
 
-import com.company.project.common.service.AbstractService;
 import com.company.project.manage.dao.SysPermissionDao;
 import com.company.project.manage.entity.SysPermission;
 import com.company.project.manage.service.SysPermissionService;
@@ -16,7 +15,7 @@ import java.util.List;
  * @since 2020-06-28 15:18:39
  */
 @Service("sysPermissionService")
-public class SysPermissionServiceImpl extends AbstractService<SysPermission> implements SysPermissionService {
+public class SysPermissionServiceImpl implements SysPermissionService {
     @Resource
     private SysPermissionDao sysPermissionDao;
 

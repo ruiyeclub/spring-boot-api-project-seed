@@ -1,6 +1,5 @@
 package com.company.project.manage.service;
 
-import com.company.project.common.service.Service;
 import com.company.project.manage.entity.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
  * @author Raychen
  * @since 2020-06-28 15:18:39
  */
-public interface UserInfoService extends Service<UserInfo> {
+public interface UserInfoService{
 
     /**
      * 通过username查找用户信息

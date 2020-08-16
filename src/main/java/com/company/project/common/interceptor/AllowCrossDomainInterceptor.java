@@ -1,6 +1,6 @@
 package com.company.project.common.interceptor;
 
-import com.company.project.common.ProjectConstant;
+import com.company.project.common.constant.ProjectConstant;
 import com.company.project.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;

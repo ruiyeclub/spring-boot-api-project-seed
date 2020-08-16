@@ -1,4 +1,4 @@
-package com.company.project.common;
+package com.company.project.common.constant;
 
 /**
  * 项目常量
@@ -22,10 +22,5 @@ public final class ProjectConstant {
      * SqlSessionFactoryBean 的model扫描包
      */
     public static final String TYPE_ALIASES_PACKAGE = BASE_PACKAGE+".**.model";
-
-    /**
-     * 通用Mapper 的mapper扫描包
-     */
-    public static final String MAPPER_BASE_PACKAGE = BASE_PACKAGE+".**.dao";
 
 }

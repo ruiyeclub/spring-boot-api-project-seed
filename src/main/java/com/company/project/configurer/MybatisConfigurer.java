@@ -1,6 +1,5 @@
 package com.company.project.configurer;
 
-import com.company.project.common.mapper.CrudMapper;
 import com.github.pagehelper.PageInterceptor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -8,18 +7,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
-import tk.mybatis.spring.mapper.MapperScannerConfigurer;
+import tk.mybatis.spring.annotation.MapperScan;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
-import static com.company.project.common.ProjectConstant.MAPPER_BASE_PACKAGE;
-import static com.company.project.common.ProjectConstant.TYPE_ALIASES_PACKAGE;
+import static com.company.project.common.constant.ProjectConstant.TYPE_ALIASES_PACKAGE;
 
 /**
  * Mybatis & Mapper & PageHelper 配置
  * @author Ray。
  */
+@MapperScan("com.company.project.manage.dao")
 @Configuration
 public class MybatisConfigurer {
 
@@ -48,23 +47,6 @@ public class MybatisConfigurer {
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactory.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
         return sqlSessionFactory.getObject();
-    }
-
-    @Bean
-    public MapperScannerConfigurer mapperScannerConfigurer() {
-        MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactoryBean");
-        mapperScannerConfigurer.setBasePackage(MAPPER_BASE_PACKAGE);
-
-        //配置通用Mapper，详情请查阅官方文档
-        Properties properties = new Properties();
-        properties.setProperty("mappers", CrudMapper.class.getName());
-        //insert、update是否判断字符串类型!='' 即 test="str != null"表达式内是否追加 and str != ''
-        properties.setProperty("notEmpty", "false");
-        properties.setProperty("IDENTITY", "MYSQL");
-        mapperScannerConfigurer.setProperties(properties);
-
-        return mapperScannerConfigurer;
     }
 
 }
