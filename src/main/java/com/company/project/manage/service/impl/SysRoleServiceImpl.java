@@ -1,5 +1,6 @@
 package com.company.project.manage.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.company.project.manage.dao.SysRoleDao;
 import com.company.project.manage.entity.SysRole;
 import com.company.project.manage.service.SysRoleService;
@@ -15,7 +16,7 @@ import java.util.List;
  * @since 2020-06-28 15:18:39
  */
 @Service("sysRoleService")
-public class SysRoleServiceImpl implements SysRoleService {
+public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao,SysRole> implements SysRoleService {
     @Resource
     private SysRoleDao sysRoleDao;
 

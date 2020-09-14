@@ -1,5 +1,6 @@
 package com.company.project.manage.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.company.project.common.util.StringUtils;
 import com.company.project.manage.dao.UserInfoDao;
 import com.company.project.manage.entity.UserInfo;
@@ -15,7 +16,7 @@ import javax.annotation.Resource;
  * @since 2020-06-28 15:18:39
  */
 @Service("userInfoService")
-public class UserInfoServiceImpl implements UserInfoService {
+public class UserInfoServiceImpl extends ServiceImpl<UserInfoDao,UserInfo> implements UserInfoService {
     @Resource
     private UserInfoDao userInfoDao;
 
@@ -26,9 +27,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public boolean login(String username, String password) {
-        UserInfo userInfo=new UserInfo();
-        userInfo.setName(username);
-        UserInfo user = userInfoDao.selectOne(userInfo);
+        UserInfo user = userInfoDao.findByUsername(username);
         if(StringUtils.isNull(user)){
             return false;
         }

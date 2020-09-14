@@ -1,11 +1,11 @@
 package com.company.project.common.util;
 
-import com.company.project.common.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -88,7 +88,7 @@ public class RedisUtils {
      */
     public Long getExpire(String key, TimeUnit unit) {
         if(null==key||null==unit){
-            throw new BusinessException("key or TomeUnit 不能为空");
+            throw new RuntimeException("key or TomeUnit 不能为空");
         }
         return redisTemplate.getExpire(key, unit);
     }

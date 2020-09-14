@@ -1,5 +1,7 @@
 package com.company.project.common.shiro;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.company.project.common.util.JwtUtils;
 import com.company.project.manage.entity.UserInfo;
 import com.company.project.manage.service.SysPermissionService;
 import com.company.project.manage.service.SysRoleService;
@@ -11,12 +13,14 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Ray。
  * @date 2017-12-01 21:25
  */
 @Slf4j
+@Component
 public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     private UserInfoService userInfoService;
@@ -24,6 +28,16 @@ public class ShiroRealm extends AuthorizingRealm {
     private SysRoleService sysRoleService;
     @Autowired
     private SysPermissionService sysPermissionService;
+
+    /**
+     * 判断传入的token是否是JwtToken
+     * @param token
+     * @return
+     */
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return token instanceof JwtToken;
+    }
 
     /**
      * 获取用户身份信息的时候 就会调用此方法 从数据库获取该用户的权限与角色信息
@@ -61,19 +75,17 @@ public class ShiroRealm extends AuthorizingRealm {
         //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
         System.out.println("认证-->ShiroRealm.doGetAuthenticationInfo");
         //获取用户的输入的账号
-        String username = (String) token.getPrincipal();
-        String password = new String((char[]) token.getCredentials());
-        UserInfo userInfo = userInfoService.findByUsername(username);
+        JwtToken jwtToken = (JwtToken) token;
+        String id = JwtUtils.checkToken(jwtToken.getPrincipal().toString()).get("id").toString();
+        UserInfo userInfo = userInfoService.getById(Integer.parseInt(id));
         if (userInfo == null) {
             throw new UnknownAccountException("用户名或密码错误！");
-        }
-        if (!password.equals(userInfo.getPassword())) {
-            throw new IncorrectCredentialsException("用户名或密码错误！");
         }
         if (userInfo.getState().equals("0")) {
             throw new LockedAccountException("账号已被锁定,请联系管理员！");
         }
-        return new SimpleAuthenticationInfo(userInfo,password,getName());
+
+        return new SimpleAuthenticationInfo(userInfo, jwtToken.getCredentials(), getName());
     }
 
 }

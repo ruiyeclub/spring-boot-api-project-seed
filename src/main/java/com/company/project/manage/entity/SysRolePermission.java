@@ -2,7 +2,6 @@ package com.company.project.manage.entity;
 
 import lombok.Data;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -15,7 +14,6 @@ import java.io.Serializable;
 public class SysRolePermission implements Serializable {
     private static final long serialVersionUID = -92296252292321828L;
 
-    @Id
     private Integer permissionId;
     
     private Integer roleId;

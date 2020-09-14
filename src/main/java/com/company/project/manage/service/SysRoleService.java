@@ -1,5 +1,6 @@
 package com.company.project.manage.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.company.project.manage.entity.SysRole;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * @author Raychen
  * @since 2020-06-28 15:18:39
  */
-public interface SysRoleService{
+public interface SysRoleService extends IService<SysRole> {
 
     /**
      * 通过username查找用户角色信息

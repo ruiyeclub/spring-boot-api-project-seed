@@ -1,70 +1,52 @@
 package com.company.project.manage.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.company.project.common.result.Result;
+import com.company.project.common.util.JwtUtils;
 import com.company.project.common.util.MD5Utils;
-import com.company.project.common.util.StringUtils;
-import com.company.project.manage.dto.param.LoginParam;
+import com.company.project.manage.dto.LoginDTO;
 import com.company.project.manage.entity.UserInfo;
+import com.company.project.manage.service.UserInfoService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
-import org.apache.shiro.subject.Subject;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import javax.servlet.http.HttpServletResponse;
+
+@RestController
 @Slf4j
 @Api(tags = "登录管理")
 public class LoginController {
 
-	@GetMapping("/login")
-	public String login() {
-		return "login";
-	}
+	@Autowired
+	private UserInfoService userInfoService;
 
 	@PostMapping("/login")
-	@ResponseBody
-	@ApiOperation("登录")
-	public Result login(String username,String password,boolean rememberMe) {
-		System.out.println("我是controller");
-		password = MD5Utils.encrypt(username, password);
-		UsernamePasswordToken token = new UsernamePasswordToken(username, password,
-				rememberMe);
-		Subject subject = SecurityUtils.getSubject();
-		System.out.println("我是controller1");
-		try {
-			subject.login(token);
-			System.out.println("我是controller2");
-			return Result.success();
-		} catch (UnknownAccountException e) {
-			return Result.failure(e.getMessage());
-		} catch (IncorrectCredentialsException e) {
-			return Result.failure(e.getMessage());
-		} catch (LockedAccountException e) {
-			return Result.failure(e.getMessage());
-		} catch (AuthenticationException e) {
-			return Result.failure("认证失败！");
+	public Result login(@Validated @RequestBody LoginDTO loginDTO, HttpServletResponse response) {
+
+		UserInfo user = userInfoService.getOne(new QueryWrapper<UserInfo>().eq("username", loginDTO.getUsername()));
+		Assert.notNull(user, "用户不存在");
+
+		String password = MD5Utils.encrypt(loginDTO.getUsername(), loginDTO.getPassword());
+		if(!user.getPassword().equals(password)){
+			return Result.failure("密码不正确");
 		}
+		String jwt = JwtUtils.generateToken(user);
+		return Result.success(jwt);
 	}
 
-	@RequestMapping("/")
-	public String redirectIndex() {
-		return "redirect:/index";
-	}
-
-	@GetMapping("/403")
-	public String forbid() {
-		return "403";
-	}
-
-	@RequestMapping("/index")
-	public String index(Model model) {
-		System.out.println("进入首页index");
-		UserInfo user = (UserInfo) SecurityUtils.getSubject().getPrincipal();
-		model.addAttribute("user", user);
-		return "index";
+	@RequiresAuthentication
+	@GetMapping("/logout")
+	public Result logout() {
+		SecurityUtils.getSubject().logout();
+		return Result.success();
 	}
 }

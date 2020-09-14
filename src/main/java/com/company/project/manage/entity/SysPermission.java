@@ -1,8 +1,9 @@
 package com.company.project.manage.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -15,7 +16,7 @@ import java.io.Serializable;
 public class SysPermission implements Serializable {
     private static final long serialVersionUID = -90790111150795021L;
 
-    @Id
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     
     private String name;
