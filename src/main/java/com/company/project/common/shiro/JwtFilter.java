@@ -39,7 +39,6 @@ public class JwtFilter extends AuthenticatingFilter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String jwt = request.getHeader("Authorization");
-        System.out.println("在吗？"+jwt);
         if(StringUtils.isEmpty(jwt)) {
             return true;
         } else {

@@ -55,13 +55,16 @@ public class ShiroConfig {
         filterMap.put("/logout", "logout");
         filterMap.put("/login", "anon");
         filterMap.put("/druid/**", "anon");
-        //swagger2免拦截
-        filterMap.put("/swagger-ui.html**", "anon");
-        filterMap.put("/v2/api-docs", "anon");
-        filterMap.put("/swagger-resources/**", "anon");
-        filterMap.put("/webjars/**", "anon");
         //所有请求经过jwt
         filterMap.put("/**", "jwt");
+        // swagger2页面
+        filterMap.put("/swagger-ui.html", "anon");
+        filterMap.put("/swagger/**", "anon");
+        filterMap.put("/swagger-resources/**", "anon");
+        filterMap.put("/v2/**", "anon");
+        filterMap.put("/webjars/**", "anon");
+        filterMap.put("/configuration/**", "anon");
+        filterMap.put("/doc.html","anon");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
         return shiroFilter;
     }

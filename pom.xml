@@ -137,11 +137,6 @@
             <version>0.9.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-
         <!--Redis缓存操作 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
