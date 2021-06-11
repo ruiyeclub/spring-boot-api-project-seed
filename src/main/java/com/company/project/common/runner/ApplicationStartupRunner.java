@@ -35,7 +35,7 @@ public class ApplicationStartupRunner implements ApplicationRunner {
             if (StringUtils.isNotBlank(contextPath)) {
                 url += contextPath;
             }
-            log.info("seed 权限系统启动完毕，地址：{}", url);
+//            log.info("seed 权限系统启动完毕，地址：{}", url);
         }
     }
 }

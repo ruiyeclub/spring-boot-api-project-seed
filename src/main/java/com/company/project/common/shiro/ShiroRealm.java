@@ -1,6 +1,5 @@
 package com.company.project.common.shiro;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.company.project.common.util.JwtUtils;
 import com.company.project.manage.entity.UserInfo;
 import com.company.project.manage.service.SysPermissionService;
@@ -13,15 +12,14 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  * @author Ray。
  * @date 2017-12-01 21:25
  */
 @Slf4j
-@Component
 public class ShiroRealm extends AuthorizingRealm {
+
     @Autowired
     private UserInfoService userInfoService;
     @Autowired
@@ -84,8 +82,52 @@ public class ShiroRealm extends AuthorizingRealm {
         if (userInfo.getState().equals("0")) {
             throw new LockedAccountException("账号已被锁定,请联系管理员！");
         }
-
         return new SimpleAuthenticationInfo(userInfo, jwtToken.getCredentials(), getName());
+    }
+
+    /**
+     * 重写方法,清除当前用户的的 授权缓存
+     * @param principals
+     */
+    @Override
+    public void clearCachedAuthorizationInfo(PrincipalCollection principals) {
+        super.clearCachedAuthorizationInfo(principals);
+    }
+
+    /**
+     * 重写方法，清除当前用户的 认证缓存
+     * @param principals
+     */
+    @Override
+    public void clearCachedAuthenticationInfo(PrincipalCollection principals) {
+        super.clearCachedAuthenticationInfo(principals);
+    }
+
+    @Override
+    public void clearCache(PrincipalCollection principals) {
+        super.clearCache(principals);
+    }
+
+    /**
+     * 自定义方法：清除所有 授权缓存
+     */
+    public void clearAllCachedAuthorizationInfo() {
+        getAuthorizationCache().clear();
+    }
+
+    /**
+     * 自定义方法：清除所有 认证缓存
+     */
+    public void clearAllCachedAuthenticationInfo() {
+        getAuthenticationCache().clear();
+    }
+
+    /**
+     * 自定义方法：清除所有的  认证缓存  和 授权缓存
+     */
+    public void clearAllCache() {
+        clearAllCachedAuthenticationInfo();
+        clearAllCachedAuthorizationInfo();
     }
 
 }

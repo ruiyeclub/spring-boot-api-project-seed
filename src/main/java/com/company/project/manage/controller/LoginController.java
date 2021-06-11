@@ -8,6 +8,7 @@ import com.company.project.manage.dto.LoginDTO;
 import com.company.project.manage.entity.UserInfo;
 import com.company.project.manage.service.UserInfoService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -19,8 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-
 @RestController
 @Slf4j
 @Api(tags = "登录管理")
@@ -30,7 +29,8 @@ public class LoginController {
 	private UserInfoService userInfoService;
 
 	@PostMapping("/login")
-	public Result login(@Validated @RequestBody LoginDTO loginDTO, HttpServletResponse response) {
+	@ApiOperation("登录")
+	public Result login(@Validated @RequestBody LoginDTO loginDTO) {
 
 		UserInfo user = userInfoService.getOne(new QueryWrapper<UserInfo>().eq("username", loginDTO.getUsername()));
 		Assert.notNull(user, "用户不存在");
@@ -43,6 +43,7 @@ public class LoginController {
 		return Result.success(jwt);
 	}
 
+	@ApiOperation("登出")
 	@RequiresAuthentication
 	@GetMapping("/logout")
 	public Result logout() {
