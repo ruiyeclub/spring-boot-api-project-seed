@@ -31,7 +31,6 @@ public class LoginController {
 	@PostMapping("/login")
 	@ApiOperation("登录")
 	public Result login(@Validated @RequestBody LoginDTO loginDTO) {
-
 		UserInfo user = userInfoService.getOne(new QueryWrapper<UserInfo>().eq("username", loginDTO.getUsername()));
 		Assert.notNull(user, "用户不存在");
 
