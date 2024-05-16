@@ -73,7 +73,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.3.3</version>
+            <version>5.8.21</version>
         </dependency>
         <!--阿里 Druid Spring Boot Starter依赖-->
         <dependency>
